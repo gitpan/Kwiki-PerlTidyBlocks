@@ -1,16 +1,14 @@
 package Kwiki::PerlTidyBlocks;
-use strict;
-use warnings;
-use Kwiki::Plugin '-Base';
-use Kwiki::Installer '-Base';
-our $VERSION = '0.10';
+use Kwiki::Plugin -Base;
+use Kwiki::Installer -Base;
+our $VERSION = '0.11';
 
 const class_id => 'perl_tidy_blocks';
-const class_title => 'Perl Tidy Blocks';
 const css_file => 'perl_tidy_blocks.css';
 
 sub register {
     my $registry = shift;
+    $registry->add(prerequisite => 'cache');
     $registry->add(wafl => perl => 'Kwiki::PerlTidyBlocks::Wafl');
 }
 
@@ -39,13 +37,11 @@ sub tidy {
         Perl::Tidy::perltidy(
             source      => \$source,
             destination => \$result,
-            argv        => [qw( -q -html -pre )],
+            argv        => [qw( -q -html -pre -npro )],
         );
     };
     $@ ? $source : $result;
 }
-
-1;
 
 package Kwiki::PerlTidyBlocks;
 __DATA__
