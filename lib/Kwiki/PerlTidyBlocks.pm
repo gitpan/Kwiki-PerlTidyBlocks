@@ -1,7 +1,7 @@
 package Kwiki::PerlTidyBlocks;
 use Kwiki::Plugin -Base;
 use Kwiki::Installer -Base;
-our $VERSION = '0.11';
+our $VERSION = '0.12';
 
 const class_id => 'perl_tidy_blocks';
 const css_file => 'perl_tidy_blocks.css';
@@ -24,7 +24,7 @@ sub to_html {
 
 sub from_cache {
     my $source = shift;
-    $self->hub->load_class('cache')->process(
+    $self->hub->cache->process(
         sub { $self->tidy($source) }, 'perl_tidy_blocks', $source
     );
 }
